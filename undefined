@@ -1,0 +1,30 @@
+```scala
+import scala.util.{Try, Success, Failure}
+
+class MyClass(val name: String) {
+  private var _age: Int = 0
+
+  def age: Int = _age
+
+  def age_=(newAge: Int): Unit = {
+    Try{
+       if (newAge >= 0) {
+          _age = newAge
+       } else {
+          throw new IllegalArgumentException("Age cannot be negative")
+       }
+    } match {
+      case Success(_) => println("Age updated successfully")
+      case Failure(exception) => println(s"Error updating age: ${exception.getMessage}")
+    }
+  }
+}
+
+object Main extends App{
+  val myObj = new MyClass("John")
+  myObj.age = 30
+  println(myObj.age) // Output: 30
+  myObj.age = -5
+  println(myObj.age) // Output: 0. Error message is printed too.
+}
+```
